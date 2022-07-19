@@ -1,14 +1,18 @@
 let arreglo_producto = new Array();
 let gen_id = 1;
 
+let formulario = document.getElementById("formulario")
+formulario.onsubmit = (e) =>{
+    e.preventDefault();
+
 let nombre = document.getElementById("name").value
 let apellido = document.getElementById("lastName").value 
 let dni = document.getElementById("dni").value
 let datos = nombre +" "+apellido+" "+dni
-let formulario = document.getElementById("formulario")
-formulario.onsubmit = () =>( 
-    alert("Bienvenido al carrito de compras "+ datos))
-
+localStorage.setItem(`Bienvenida`, `datos`)
+console.log(datos)
+    alert("Bienvenido al carrito de compras "+ datos)
+}
     const listaProductos = [
         {
             id : 1,
@@ -75,20 +79,21 @@ for (const producto of listaProductos){
 }
 
 
-let botonUno = document.getElementById("agregarCompra")
-botonUno.addEventListener("click", () => (
-    alert("se agregó producto al carrito")
-))
+
+
+carrito.onsubmit = (e) =>{
+    e.preventDefault();
 let carrito = document.getElementById("carrito")
 carrito.onsubmit = () => (
     console.log("se ejecuto evento submit")
 )
 
 let botonPagar = document.getElementById("realizarPago")
+}
+// botonPagar.addEventListener("click", (), (
+//     alert("como desea realizar el pago?"
 
-botonPagar.addEventListener("click", () (
-    alert("como desea realizar el pago?"
 
+// )
+// ))
 
-)
-))
