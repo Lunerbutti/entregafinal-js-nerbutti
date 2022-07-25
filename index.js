@@ -11,7 +11,17 @@ let dni = document.getElementById("dni").value
 let datos = nombre +" "+apellido+" "+dni
 localStorage.setItem(`Bienvenida`, `datos`)
 console.log(datos)
-    alert("Bienvenido al carrito de compras "+ datos)
+Swal.fire({
+    title: 'Bienvenido al carrito de compras',
+    text: datos,
+    imageUrl: 'https://img.myloview.es/posters/pares-afroamericanos-jovenes-que-se-sientan-entre-los-panieres-coloridos-mujer-y-hombre-divirtiendose-al-hacer-compras-juntos-ilustracion-de-dibujos-animados-de-vector-aislado-sobre-fondo-blanco-di-400-118422825.jpg',
+    imageWidth: 400,
+    imageHeight: 200,
+    imageAlt: 'Custom image',
+    position: 'top-center',
+    timer: 8500
+  })
+    
 }
     const listaProductos = [
         {
