@@ -6,7 +6,14 @@ let aProducto = [],
 let botonRegistrarCompra = document.getElementById(`agregarCompra`);
 
 botonRegistrarCompra.addEventListener("click", RegistroCompra => (
-    alert("se agregó producto al carrito")
+    // alert("se agregó producto al carrito")
+    Toastify({
+
+        text: "This is a toast",
+        
+        duration: 3000
+        
+        }).showToast();
 ))
 
 function RegistroCompra(){

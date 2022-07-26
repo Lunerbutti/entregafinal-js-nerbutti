@@ -4,7 +4,7 @@ let gen_id = 1;
 let formulario = document.getElementById("formulario")
 formulario.onsubmit = (e) =>{
     e.preventDefault();
-
+//Login galeria + localstorage
 let nombre = document.getElementById("name").value
 let apellido = document.getElementById("lastName").value 
 let dni = document.getElementById("dni").value
@@ -100,10 +100,17 @@ carrito.onsubmit = () => (
 
 let botonPagar = document.getElementById("realizarPago")
 }
-// botonPagar.addEventListener("click", (), (
-//     alert("como desea realizar el pago?"
+// toastify
 
+let botonAgregarCompra = document.getElementById(`agregarCompra`);
 
-// )
-// ))
-
+botonAgregarCompra.addEventListener("click", () => {
+Toastify({
+    text: "Producto agregado al Carrito",
+    className: "info",
+    duration: `6000`,
+    style: {
+      background: "linear-gradient(to right, #00b09b, #96c93d)",
+    }
+  }).showToast();
+})

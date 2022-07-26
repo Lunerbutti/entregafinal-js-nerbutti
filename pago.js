@@ -28,7 +28,7 @@ for (const cuotas of cuotasPago ){
     `
     contenedorPPP.append(columnaNueva)
 }
-
+// Galerias a botones de pago
 const seleccionCuota = document.getElementById("btn1")
 seleccionCuota.onclick = pagoARealizar
 
