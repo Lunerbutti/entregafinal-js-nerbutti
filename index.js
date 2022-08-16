@@ -32,9 +32,7 @@ Swal.fire({
             nombre : "jean",
             precioCompra : "1500",
             precioVenta : "5000",
-            cantidadTalleS : "2",
-            cantidadTalleM : "2",
-            cantidadTalleL : "2",
+            cantidad : "1",
             descripcion : "jean roto",
         },
         {
@@ -43,9 +41,7 @@ Swal.fire({
             nombre : "Remera con Cruz ",
             precioCompra : "400",
             precioVenta : "2000",
-            cantidadTalleS : "3",
-            cantidadTalleM : "5",
-            cantidadTalleL : "2",
+            cantidad : "1",
             descripcion : "Remera Cruz 2",
         },
         {
@@ -54,9 +50,7 @@ Swal.fire({
             nombre : "maya",
             precioCompra : "1000",
             precioVenta : "3000",
-            cantidadTalleS : "2",
-            cantidadTalleM : "2",
-            cantidadTalleL : "1",
+            cantidad : "1",
             descripcion: "sunga hombre ",
         },
         {
@@ -65,9 +59,7 @@ Swal.fire({
             nombre : "remera",
             precioCompra : "500",
             precioVenta : "1500",
-            cantidadTalleS : "5",
-            cantidadTalleM : "3",
-            cantidadTalleL : "2",
+            cantidad : "1",
             descripcion : "remera mc",
 
         },
@@ -77,9 +69,7 @@ Swal.fire({
             nombre : "Bermuda Jean",
             precioCompra : "1500",
             precioVenta : "5000",
-            cantidadTalleS : "2",
-            cantidadTalleM : "2",
-            cantidadTalleL : "2",
+            cantidad : "1",
             descripcion : "Bermuda Jean",
         },
         {
@@ -88,9 +78,7 @@ Swal.fire({
             nombre : "Camisa",
             precioCompra : "1500",
             precioVenta : "5000",
-            cantidadTalleS : "2",
-            cantidadTalleM : "2",
-            cantidadTalleL : "2",
+            cantidad : "1",
             descripcion : "Camisa",
         },
         {
@@ -99,9 +87,7 @@ Swal.fire({
             nombre : "Short de Baño",
             precioCompra : "1500",
             precioVenta : "5000",
-            cantidadTalleS : "2",
-            cantidadTalleM : "2",
-            cantidadTalleL : "2",
+            cantidad : "1",
             descripcion : "Short de Baño",
         },
         {
@@ -110,17 +96,35 @@ Swal.fire({
             nombre : "Musculosa con Capucha",
             precioCompra : "1500",
             precioVenta : "5000",
-            cantidadTalleS : "2",
-            cantidadTalleM : "2",
-            cantidadTalleL : "2",
+            cantidad : "1",
             descripcion : "Musculosa Deportiva con capucha",
         },
 ];
 
+
 let contenedorProductos = document.getElementById("contenedor-productos")
 
-for (const producto of listaProductos){
-    let columnaNueva = document.createElement("div")
+const contenedorCarrito = document.getElementById("carrito-contenedor")
+const botonVaciarCarrito = document.getElementById("vaciar-carrito")
+const contarCarrito = document.getElementById("contarCarrito")
+const precioTotal = document.getElementById("precioTotal")
+let carrito = []
+
+document.addEventListener('DOMContentLoaded', () => {
+    if (localStorage.getItem ('carrito')){
+        carrito =JSON.parse(localStorage.getItem('carrito'))
+        actualizarCarrito()
+    }
+})
+
+botonVaciarCarrito.addEventListener('click', () =>{
+    carrito.length = 0
+    actualizarCarrito()
+}
+)
+listaProductos.forEach((producto) => {
+    const columnaNueva = document.createElement("div")
+    columnaNueva.classList.add('producto')
     columnaNueva.className = "col-md-4 mt-3 mr-0"
     columnaNueva.id = `columnaNueva-${producto.id}`
     columnaNueva.innerHTML = `
@@ -128,23 +132,37 @@ for (const producto of listaProductos){
         <img src="${producto.img}" class="card-img-top img-fluid" alt="">
         <div class="card-body">
             <p class="card-text"> Nombre: <b>${producto.nombre} </b></p>
-            <p class="card-text"> Precio Compra: <b>${producto.precioCompra} </b></p>
             <p class="card-text"> Precio Venta: <b>${producto.precioVenta} </b></p>
-            <p class="card-text"> Cant Talle S: <b>${producto.cantidadTalleS} </b></p>
-            <p class="card-text"> Cant Talle M: <b>${producto.cantidadTalleM} </b></p>
-            <p class="card-text"> Cant Talle L: <b>${producto.cantidadTalleL} </b></p>
+            <p class="card-text"> Cantidad: <b>${producto.cantidad} </b></p>
+            <select class="card-text"> Talle : <option value="L">Large</option>
+            <option value="M">Medium</option><option value="S">Small</option></select>
             <p class="card-text"> Descripcion: <b>${producto.descripcion} </b></p>
-            <button type="submit" class="btn btn-success" onclick="AgregarCompra()">Comprar</button>
-            <button type="submit" class="btn btn-danger" onclick="eliminarCompra()">Eliminar <i class="fas fa-trash-alt"></button>
+            <button type="submit" class="btn btn-success" onclick="AgregarCompra()" id="agregar${producto.id}">Comprar</button>
+            <button type="submit" class="btn btn-danger" onclick="eliminarCompra()" id="eliminar${producto.id}">Eliminar</button>
         </div>
     </div>
     `
+
     contenedorProductos.append(columnaNueva)
+    
+    let botonAgregarProducto = document.getElementById('agregar${producto.id}')    
+    let botonEliminarProducto = document.getElementById('eliminar${producto.id}')    
+    
+    // botonAgregarProducto.addEventListener('click', () => {
+    //     agregarAlCarritoDeCompras(prodId)
+    // })
+    // botonAgregarProducto.addEventListener("click", () => {
+    //     agregarAlCarrito(producto.id)
+    // })
+    // botonEliminarProducto.addEventListener("click", () => {
+    //     eliminarDelCarrito(producto.id)
+    // })
 }
+)
 
-// Toastify a botones agregar y eliminar
+// Toastify y eventos a botones agregar y eliminar
 
-function AgregarCompra() {   
+function AgregarCompra() {  
     Toastify({
         text: "Producto agregado al Carrito",
         className: "info",
@@ -166,49 +184,52 @@ function eliminarCompra() {
     }).showToast();
 }
 
+// agregado al carro
+const agregarAlCarritoDeCompras = (prodId) =>{
+    const existe = carrito.some (prod => prod.id === prodId)
+    if (existe){
+        const prod = carrito.map (prod =>{ 
+            if (prod.id === prodId){
+                prod.cantidad++
+            }
+        })
+    } else{
+        const item = listaProductos.find((prod) => prod.id === prodId)
+        carrito.push(item)
+        console.log(carrito)
+
+    }
+        actualizarCarrito()
+
+    }
+
+
+const eliminarDelCarrito = (prodId) => {
+    const item = carrito.find((prod) => prod.id === prodId)
+    const indice = carrito.indexOf(item)
+    carrito.splice(indice, 1)
+    actualizarCarrito()
+
+}
+
+const actualizarCarrito = () => {
+    contenedorCarrito.innerHTML = ""
+    carrito.forEach((prod) => {
+        const div = document.createElement('div')
+        div.innerHTML =`
+        <p>${prod.nombre}</p>
+        <p>${prod.precioVenta}</p>
+        <p>Cantidad: <span id="cantidad">${prod.cantidad}</span></p>
+        <button onclick="eliminarDelCarrito(${prod.id})" class="boton-eliminar"><i class="fas fa-trash-alt"></i></button>
+        `
+        contenedorCarrito.appendChild(div)
+        localStorage.setItem('carrito', JSON.stringify(carrito))
+    })
+    contarCarrito.innerText = carrito.length
+    console.log(carrito)
+    precioTotal.innerText = carrito.reduce((acc, prod) => acc + prod.cantidad * prod.precio, 0)
+}
 
 
 
 
-// const inputProducto = document.querySelector('#inputNombreProducto')
-// const listasAgregada = document.querySelector('#data')
-
-// // // window.addEventListener('DOMContentLoaded', async () => {
-// // //     const data = await loadProducts()
-    
-// // })
-// async function loadProducts() {
-//    const response = fetch('https://jsonplaceholder.typicode.com/todos/')
-//    .then(response => response.json())
-//    .then(data => console.log(json))
-// }
-// inputProducto.addEventListener('keyup', e =>[
-//     console.log(inputProducto.value)
-// ])
-
-// const createProductItem = products => products.map(producto => '<li>${products.userId} ${products.id} ${products.title}</li>').join(' ')
-
-// function listaProdAgregado(products) {
-//     const inemsString = createProductItem(products)
-//     listaCompra.innerHTML = itemsString
-// }
-
-
-
-// carrito.onsubmit = (e) =>{
-//     e.preventDefault();
-// let carrito = document.getElementById("carritoAgragarProducto")
-// carrito.onsubmit = (createProductItem) => (
-//     console.log("se ejecuto evento submit")
-// )
-
-// let botonPagar = document.getElementById("realizarPago")
-// }
-
-// let carrito = []
-
-// const agregarAlCarrito = (prodID) => {
-//     const item = stockProductos.find(prod) => prod.id ===prod.id
-//     carrito.push(item)
-
-// }
