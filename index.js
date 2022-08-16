@@ -137,26 +137,22 @@ listaProductos.forEach((producto) => {
             <select class="card-text"> Talle : <option value="L">Large</option>
             <option value="M">Medium</option><option value="S">Small</option></select>
             <p class="card-text"> Descripcion: <b>${producto.descripcion} </b></p>
-            <button type="submit" class="btn btn-success" onclick="AgregarCompra()" id="agregar${producto.id}">Comprar</button>
-            <button type="submit" class="btn btn-danger" onclick="eliminarCompra()" id="eliminar${producto.id}">Eliminar</button>
+            <button class="btn btn-success" onclick="AgregarCompra()" id="agregar${producto.id}">Comprar</button>
+            <button class="btn btn-danger" onclick="eliminarCompra()" id="eliminar${producto.id}">Eliminar</button>
         </div>
     </div>
     `
 
     contenedorProductos.append(columnaNueva)
-    
-    let botonAgregarProducto = document.getElementById('agregar${producto.id}')    
-    let botonEliminarProducto = document.getElementById('eliminar${producto.id}')    
-    
-    // botonAgregarProducto.addEventListener('click', () => {
-    //     agregarAlCarritoDeCompras(prodId)
-    // })
-    // botonAgregarProducto.addEventListener("click", () => {
-    //     agregarAlCarrito(producto.id)
-    // })
-    // botonEliminarProducto.addEventListener("click", () => {
-    //     eliminarDelCarrito(producto.id)
-    // })
+    const botonAgregarProducto = document.getElementById(`agregar${producto.id}`)
+    botonAgregarProducto.addEventListener('click', () => {
+        agregarAlCarritoDeCompras(producto.id)
+    })
+    const botonEliminarProducto = document.getElementById(`eliminar${producto.id}`)
+    botonEliminarProducto.addEventListener('click', () => {
+        eliminarDelCarrito(producto.id)
+    })
+  
 }
 )
 
@@ -184,7 +180,7 @@ function eliminarCompra() {
     }).showToast();
 }
 
-// agregado al carro
+// agregado al carro de compras
 const agregarAlCarritoDeCompras = (prodId) =>{
     const existe = carrito.some (prod => prod.id === prodId)
     if (existe){
@@ -203,7 +199,6 @@ const agregarAlCarritoDeCompras = (prodId) =>{
 
     }
 
-
 const eliminarDelCarrito = (prodId) => {
     const item = carrito.find((prod) => prod.id === prodId)
     const indice = carrito.indexOf(item)
@@ -216,12 +211,12 @@ const actualizarCarrito = () => {
     contenedorCarrito.innerHTML = ""
     carrito.forEach((prod) => {
         const div = document.createElement('div')
-        div.innerHTML =`
+        div.innerHTML =`<span>
         <p>${prod.nombre}</p>
         <p>${prod.precioVenta}</p>
         <p>Cantidad: <span id="cantidad">${prod.cantidad}</span></p>
         <button onclick="eliminarDelCarrito(${prod.id})" class="boton-eliminar"><i class="fas fa-trash-alt"></i></button>
-        `
+        </span>`
         contenedorCarrito.appendChild(div)
         localStorage.setItem('carrito', JSON.stringify(carrito))
     })
@@ -229,7 +224,6 @@ const actualizarCarrito = () => {
     console.log(carrito)
     precioTotal.innerText = carrito.reduce((acc, prod) => acc + prod.cantidad * prod.precio, 0)
 }
-
 
 
 
