@@ -23,29 +23,34 @@ Swal.fire({
   })
     
 }
+
+// Lista de productos
     const listaProductos = [
         {
             id : 1,
-            nombre : "remera",
-            precioCompra : "500",
-            precioVenta : "1500",
-            cantidadTalleS : "5",
-            cantidadTalleM : "3",
+            img : "./img/jeanRoto.jpg",
+            nombre : "jean",
+            precioCompra : "1500",
+            precioVenta : "5000",
+            cantidadTalleS : "2",
+            cantidadTalleM : "2",
             cantidadTalleL : "2",
-            descripcion : "remera mc",
+            descripcion : "jean roto",
         },
         {
             id : 2,
-            nombre : "musculosa",
+            img : "./img/remeraCruz2.jpg",
+            nombre : "Remera con Cruz ",
             precioCompra : "400",
             precioVenta : "2000",
             cantidadTalleS : "3",
             cantidadTalleM : "5",
             cantidadTalleL : "2",
-            descripcion : "musculosa transparente",
+            descripcion : "Remera Cruz 2",
         },
         {
             id : 3,
+            img : "./img/sunga.jpg",
             nombre : "maya",
             precioCompra : "1000",
             precioVenta : "3000",
@@ -56,13 +61,59 @@ Swal.fire({
         },
         {
             id : 4,
-            nombre : "jean",
+            img : "./img/RemeraCruz.jpg",
+            nombre : "remera",
+            precioCompra : "500",
+            precioVenta : "1500",
+            cantidadTalleS : "5",
+            cantidadTalleM : "3",
+            cantidadTalleL : "2",
+            descripcion : "remera mc",
+
+        },
+        {
+            id : 5,
+            img : "./img/bermuda.jpg",
+            nombre : "Bermuda Jean",
             precioCompra : "1500",
             precioVenta : "5000",
             cantidadTalleS : "2",
             cantidadTalleM : "2",
             cantidadTalleL : "2",
-            descripcion : "jean roto",
+            descripcion : "Bermuda Jean",
+        },
+        {
+            id : 6,
+            img : "./img/camisa.jpg",
+            nombre : "Camisa",
+            precioCompra : "1500",
+            precioVenta : "5000",
+            cantidadTalleS : "2",
+            cantidadTalleM : "2",
+            cantidadTalleL : "2",
+            descripcion : "Camisa",
+        },
+        {
+            id : 7,
+            img : "./img/shortBaño.jpg",
+            nombre : "Short de Baño",
+            precioCompra : "1500",
+            precioVenta : "5000",
+            cantidadTalleS : "2",
+            cantidadTalleM : "2",
+            cantidadTalleL : "2",
+            descripcion : "Short de Baño",
+        },
+        {
+            id : 8,
+            img : "./img/musculosaCapucha.jpg",
+            nombre : "Musculosa con Capucha",
+            precioCompra : "1500",
+            precioVenta : "5000",
+            cantidadTalleS : "2",
+            cantidadTalleM : "2",
+            cantidadTalleL : "2",
+            descripcion : "Musculosa Deportiva con capucha",
         },
 ];
 
@@ -70,10 +121,11 @@ let contenedorProductos = document.getElementById("contenedor-productos")
 
 for (const producto of listaProductos){
     let columnaNueva = document.createElement("div")
-    columnaNueva.className = "col-md-6 mt-3 mr-0"
+    columnaNueva.className = "col-md-4 mt-3 mr-0"
     columnaNueva.id = `columnaNueva-${producto.id}`
     columnaNueva.innerHTML = `
     <div class="card">
+        <img src="${producto.img}" class="card-img-top img-fluid" alt="">
         <div class="card-body">
             <p class="card-text"> Nombre: <b>${producto.nombre} </b></p>
             <p class="card-text"> Precio Compra: <b>${producto.precioCompra} </b></p>
@@ -82,35 +134,81 @@ for (const producto of listaProductos){
             <p class="card-text"> Cant Talle M: <b>${producto.cantidadTalleM} </b></p>
             <p class="card-text"> Cant Talle L: <b>${producto.cantidadTalleL} </b></p>
             <p class="card-text"> Descripcion: <b>${producto.descripcion} </b></p>
+            <button type="submit" class="btn btn-success" onclick="AgregarCompra()">Comprar</button>
+            <button type="submit" class="btn btn-danger" onclick="eliminarCompra()">Eliminar <i class="fas fa-trash-alt"></button>
         </div>
     </div>
     `
     contenedorProductos.append(columnaNueva)
 }
 
+// Toastify a botones agregar y eliminar
 
-
-
-carrito.onsubmit = (e) =>{
-    e.preventDefault();
-let carrito = document.getElementById("carrito")
-carrito.onsubmit = () => (
-    console.log("se ejecuto evento submit")
-)
-
-let botonPagar = document.getElementById("realizarPago")
+function AgregarCompra() {   
+    Toastify({
+        text: "Producto agregado al Carrito",
+        className: "info",
+        duration: `6000`,
+        style: {
+        background: "linear-gradient(to right, #00b09b, #96c93d)"
+            },
+    }).showToast();
 }
-// toastify
 
-let botonAgregarCompra = document.getElementById(`agregarCompra`);
+function eliminarCompra() {
+    Toastify({
+        text: "Producto eliminado del Carrito",
+        className: "danger",
+        duration: `6000`,
+        style: {
+        background: "linear-gradient(to right, #b00015, #ff3149)"
+        },
+    }).showToast();
+}
 
-botonAgregarCompra.addEventListener("click", () => {
-Toastify({
-    text: "Producto agregado al Carrito",
-    className: "info",
-    duration: `6000`,
-    style: {
-      background: "linear-gradient(to right, #00b09b, #96c93d)",
-    }
-  }).showToast();
-})
+
+
+
+
+// const inputProducto = document.querySelector('#inputNombreProducto')
+// const listasAgregada = document.querySelector('#data')
+
+// // // window.addEventListener('DOMContentLoaded', async () => {
+// // //     const data = await loadProducts()
+    
+// // })
+// async function loadProducts() {
+//    const response = fetch('https://jsonplaceholder.typicode.com/todos/')
+//    .then(response => response.json())
+//    .then(data => console.log(json))
+// }
+// inputProducto.addEventListener('keyup', e =>[
+//     console.log(inputProducto.value)
+// ])
+
+// const createProductItem = products => products.map(producto => '<li>${products.userId} ${products.id} ${products.title}</li>').join(' ')
+
+// function listaProdAgregado(products) {
+//     const inemsString = createProductItem(products)
+//     listaCompra.innerHTML = itemsString
+// }
+
+
+
+// carrito.onsubmit = (e) =>{
+//     e.preventDefault();
+// let carrito = document.getElementById("carritoAgragarProducto")
+// carrito.onsubmit = (createProductItem) => (
+//     console.log("se ejecuto evento submit")
+// )
+
+// let botonPagar = document.getElementById("realizarPago")
+// }
+
+// let carrito = []
+
+// const agregarAlCarrito = (prodID) => {
+//     const item = stockProductos.find(prod) => prod.id ===prod.id
+//     carrito.push(item)
+
+// }
