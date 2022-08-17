@@ -9,6 +9,7 @@ const cuotasPago = [
         cuota12 : "12 cuotas",
     },]
 
+// creacion de botones de pago
 let contenedorPPP = document.getElementById("paginaPago")  
 for (const cuotas of cuotasPago ){
     let columnaPago = document.createElement("div")

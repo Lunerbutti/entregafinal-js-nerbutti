@@ -4,7 +4,7 @@ let gen_id = 1;
 let formulario = document.getElementById("formulario")
 formulario.onsubmit = (e) =>{
     e.preventDefault();
-//Login galeria + localstorage
+//Log in galeria + localstorage
 let nombre = document.getElementById("name").value
 let apellido = document.getElementById("lastName").value 
 let dni = document.getElementById("dni").value
@@ -24,7 +24,7 @@ Swal.fire({
     
 }
 
-// Lista de productos
+// Lista de productos (stock)
     const listaProductos = [
         {
             id : 1,
@@ -101,7 +101,7 @@ Swal.fire({
         },
 ];
 
-
+// Variables a utilizar en el carrito
 let contenedorProductos = document.getElementById("contenedor-productos")
 
 const contenedorCarrito = document.getElementById("carrito-contenedor")
@@ -109,7 +109,7 @@ const botonVaciarCarrito = document.getElementById("vaciar-carrito")
 const contarCarrito = document.getElementById("contarCarrito")
 const precioTotal = document.getElementById("precioTotal")
 let carrito = []
-
+// Localstorage carrito
 document.addEventListener('DOMContentLoaded', () => {
     if (localStorage.getItem ('carrito')){
         carrito =JSON.parse(localStorage.getItem('carrito'))
@@ -122,6 +122,9 @@ botonVaciarCarrito.addEventListener('click', () =>{
     actualizarCarrito()
 }
 )
+
+// Creacion de las Card para los productos con cada boton que agrega o elimina el producto
+
 listaProductos.forEach((producto) => {
     const columnaNueva = document.createElement("div")
     columnaNueva.classList.add('producto')
@@ -180,7 +183,7 @@ function eliminarCompra() {
     }).showToast();
 }
 
-// agregado al carro de compras
+// Agregado al carro de compras
 const agregarAlCarritoDeCompras = (prodId) =>{
     const existe = carrito.some (prod => prod.id === prodId)
     if (existe){
@@ -211,19 +214,17 @@ const actualizarCarrito = () => {
     contenedorCarrito.innerHTML = ""
     carrito.forEach((prod) => {
         const div = document.createElement('div')
-        div.innerHTML =`<span>
-        <p>${prod.nombre}</p>
-        <p>${prod.precioVenta}</p>
-        <p>Cantidad: <span id="cantidad">${prod.cantidad}</span></p>
+        div.innerHTML =`<tr>
+        <td>${prod.nombre}</td>
+        <td><spam>$${prod.precioVenta}</spam></td>
+        <td>Cantidad: <span id="cantidad">${prod.cantidad}</span></td>
         <button onclick="eliminarDelCarrito(${prod.id})" class="boton-eliminar"><i class="fas fa-trash-alt"></i></button>
-        </span>`
+        </tr>`
         contenedorCarrito.appendChild(div)
         localStorage.setItem('carrito', JSON.stringify(carrito))
     })
     contarCarrito.innerText = carrito.length
     console.log(carrito)
-    precioTotal.innerText = carrito.reduce((acc, prod) => acc + prod.cantidad * prod.precio, 0)
+    precioTotal.innerText = carrito.reduce((acc, prod) => acc + prod.cantidad * prod.precioVenta, 0)
+    
 }
-
-
-
